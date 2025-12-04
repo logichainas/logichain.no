@@ -1,342 +1,60 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="UTF-8">
-<title>Logichain – Moderne logistikksystem</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-<style>
-/* ===== Grunnleggende styling ===== */
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    background: #f2f5f7;
-    color: #333;
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-    transition: background 0.3s, color 0.3s;
-}
-
-/* ===== Dark Mode ===== */
-body.dark {
-    background: #121212;
-    color: #e0e0e0;
-}
-
-/* ===== Toggle Dark Mode ===== */
-.toggle-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 10px 15px;
-    border: none;
-    background: #0a3d62;
-    color: white;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    z-index: 1000;
-    transition: background 0.3s, transform 0.2s;
-}
-.toggle-btn:hover { background: #3c6382; transform: scale(1.1); }
-
-/* ===== Hero Header med animert gradient ===== */
-header {
-    position: relative;
-    height: 500px;
-    text-align: center;
-    color: white;
-    overflow: hidden;
-}
-header::before {
-    content:"";
-    position:absolute;
-    width:200%;
-    height:200%;
-    top:-50%;
-    left:-50%;
-    background: linear-gradient(45deg,#0a3d62,#3c6382,#74b9ff,#0984e3);
-    background-size:400% 400%;
-    animation: gradientMove 15s ease infinite;
-    z-index:-2;
-}
-@keyframes gradientMove {
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
-}
-
-/* Flytende SVG-ikoner */
-.floating-icon {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    opacity: 0.7;
-    animation: floatIcon linear infinite;
-}
-@keyframes floatIcon {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
-    100% { transform: translateY(0px); }
-}
-
-header h1 {
-    margin:0;
-    font-size:4rem;
-    font-weight:700;
-    animation: float 4s ease-in-out infinite;
-}
-header p {
-    font-size:1.3rem;
-    margin-top:15px;
-    animation: fadeIn 2s ease-in-out infinite alternate;
-}
-@keyframes fadeIn {0%{opacity:0.7;}100%{opacity:1;}}
-@keyframes float {0%{transform:translateY(0);}50%{transform:translateY(-15px);}100%{transform:translateY(0);}}
-
-/* ===== Seksjoner ===== */
-section {
-    max-width: 1100px;
-    margin: 50px auto;
-    background:white;
-    padding:50px;
-    border-radius:14px;
-    box-shadow:0 6px 16px rgba(0,0,0,0.12);
-    transition: background 0.3s, color 0.3s;
-}
-body.dark section {background:#1e1e1e; color:#e0e0e0;}
-h2 {color:#0a3d62; margin-top:0;}
-
-/* ===== Image/Grid/Features ===== */
-.image-grid {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:20px;
-    margin-top:30px;
-}
-.image-grid div {
-    background:#d1d8e0;
-    height:200px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#555;
-    font-size:1.1rem;
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
-    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
-}
-.image-grid div:hover {
-    transform:translateY(-10px);
-    box-shadow:0 12px 25px rgba(0,0,0,0.25);
-    background:#0a3d62;
-    color:white;
-}
-
-/* ===== Fun Fact ===== */
-.fun-fact {
-    background: linear-gradient(135deg,#0a3d62,#3c6382);
-    color:white;
-    padding:25px;
-    border-radius:12px;
-    text-align:center;
-    font-size:1.2rem;
-    cursor:pointer;
-    margin-top:30px;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.fun-fact:hover { transform:scale(1.05); box-shadow:0 8px 20px rgba(0,0,0,0.25); }
-
-/* ===== Feature Cards ===== */
-.feature-card {
-    background:#d1d8e0;
-    padding:30px;
-    border-radius:12px;
-    text-align:center;
-    box-shadow:0 6px 16px rgba(0,0,0,0.12);
-    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
-}
-.feature-card:hover {transform:translateY(-8px); box-shadow:0 14px 30px rgba(0,0,0,0.2); background:#0a3d62; color:white;}
-
-/* ===== Testimonial ===== */
-.testimonial {
-    background:#3c6382;
-    color:white;
-    padding:40px;
-    border-radius:14px;
-    margin:40px 0;
-    font-style:italic;
-    text-align:center;
-}
-
-/* ===== Stats Counters ===== */
-.stats {
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:space-around;
-    margin-top:30px;
-}
-.stat {
-    background:#d1d8e0;
-    padding:30px 20px;
-    border-radius:12px;
-    text-align:center;
-    width:200px;
-    margin:10px;
-    font-weight:bold;
-    font-size:1.5rem;
-    transition: background 0.3s;
-}
-.stat span { font-size:2.2rem; display:block; color:#0a3d62; }
-.stat:hover { background:#0a3d62; color:white; }
-
-/* ===== CTA Button ===== */
-.cta-btn {
-    display:inline-block;
-    padding:15px 30px;
-    background:#0a3d62;
-    color:white;
-    font-size:1.1rem;
-    border-radius:8px;
-    text-decoration:none;
-    margin-top:20px;
-    transition: transform 0.3s, background 0.3s;
-}
-.cta-btn:hover { transform:scale(1.05); background:#3c6382; }
-
-/* ===== Footer ===== */
-footer {
-    text-align:center;
-    margin-top:60px;
-    padding:40px;
-    color:#777;
-}
-body.dark footer {color:#aaa;}
-
-/* ===== Scroll Animations ===== */
-[data-animate] {
-    opacity:0;
-    transform: translateY(50px);
-    transition: all 0.8s ease-out;
-}
-[data-animate].animate { opacity:1; transform:translateY(0);}
-</style>
+    <meta charset="UTF-8">
+    <title>Logichain – Moderne logistikksystem</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script defer src="assets/scripts.js"></script>
 </head>
+
 <body>
-
-<button class="toggle-btn" onclick="toggleDarkMode()">🌙 Mørk/lys</button>
-
 <header>
-    <h1>Logichain</h1>
-    <p>Fremtidens datadrevne logistikksystem</p>
-
-    <!-- Flytende SVG-ikoner -->
-    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Package.svg" class="floating-icon" style="top:50px; left:80px; animation-duration:6s;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Truck.svg" class="floating-icon" style="top:120px; left:300px; animation-duration:8s;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Drone.svg" class="floating-icon" style="top:200px; left:600px; animation-duration:10s;">
+    <nav class="navbar">
+        <div class="logo">LOGICHAIN</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Hjem</a></li>
+            <li><a href="om.html">Om oss</a></li>
+            <li><a href="tjenester.html">Tjenester</a></li>
+            <li><a href="karriere.html">Karriere</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+        <button class="theme-toggle" id="themeToggle">🌓</button>
+    </nav>
 </header>
 
-<section data-animate>
-    <h2>Om oss</h2>
-    <p>Logichain utvikler et moderne og strømlinjeformet system som hjelper bedrifter å håndtere logistikk, forsendelser, ruter, kostnader og dataflyt – alt i én løsning. Målet er å gjøre logistikk enklere, raskere og rimeligere gjennom automatisering og smart teknologi.</p>
-    <div class="image-grid">
-        <div>Illustrasjon 1</div>
-        <div>Illustrasjon 2</div>
-        <div>Illustrasjon 3</div>
-        <div>Illustrasjon 4</div>
+<section class="hero">
+    <div class="hero-content">
+        <h1>Logistikk. Automatisert. Optimalisert.</h1>
+        <p>Logichain bygger neste generasjons logistikksystem for bedrifter som trenger effektivitet, kontroll og moderne teknologi.</p>
+        <a href="kontakt.html" class="cta-btn">Book en demo</a>
     </div>
-    <div class="fun-fact" onclick="showFact()">Klikk her for en kul logistikk-fakta!</div>
+    <img src="https://source.unsplash.com/1600x900/?logistics,warehouse" class="hero-img">
 </section>
 
-<section data-animate>
-    <h2>Funksjoner</h2>
-    <div class="image-grid">
-        <div class="feature-card">Automatisert ruteplanlegging</div>
-        <div class="feature-card">Kostnadskontroll i sanntid</div>
-        <div class="feature-card">Dataanalyse & rapportering</div>
-        <div class="feature-card">Integrasjoner med eksisterende systemer</div>
-    </div>
-</section>
-
-<section data-animate>
-    <h2>Live statistikk</h2>
-    <div class="stats">
-        <div class="stat"><span id="stat1">0</span>Pakker/dag</div>
-        <div class="stat"><span id="stat2">0</span>Ruter automatisert</div>
-        <div class="stat"><span id="stat3">0</span>Timer spart/uke</div>
-        <div class="stat"><span id="stat4">0</span>% Kostnadsreduksjon</div>
-    </div>
-</section>
-
-<section data-animate>
-    <h2>Vi søker systemutvikler</h2>
-    <p>Vi ser etter en dyktig, selvgående systemutvikler som vil være med å bygge Logichain fra bunnen av. Du får stor påvirkning, frihet i teknologivalg og mulighet til å forme en løsning som skal løse ekte logistikkutfordringer.</p>
-    <p>Passer for deg som liker:<br>
-       – å bygge nye løsninger fra scratch<br>
-       – automatisering og datastrømmer<br>
-       – enkle og kraftige systemer som skaper verdi
-    </p>
-    <p>Interessert? Ta kontakt – vi tar gjerne en prat om rollen.</p>
-    <a href="https://www.linkedin.com/in/einar-fredriksen-756375256" target="_blank" class="cta-btn">Kontakt meg på LinkedIn</a>
-</section>
-
-<section data-animate>
-    <h2>Testimonial</h2>
-    <div class="testimonial">
-        "Logichain har revolusjonert hvordan vi håndterer logistikk. Systemet er raskt, intuitivt og sparer oss tid og penger hver dag!" – Kunde X
+<section class="features">
+    <h2>Hvorfor Logichain?</h2>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <img src="https://source.unsplash.com/600x400/?truck,logistics">
+            <h3>Ruteoptimalisering</h3>
+            <p>Automatisk beregning av raskeste og billigste ruter.</p>
+        </div>
+        <div class="feature-card">
+            <img src="https://source.unsplash.com/600x400/?ai,data">
+            <h3>AI-basert planlegging</h3>
+            <p>Forutsi etterspørsel, kapasitetsbehov og kostnader.</p>
+        </div>
+        <div class="feature-card">
+            <img src="https://source.unsplash.com/600x400/?warehouse,automation">
+            <h3>Lagerstyring</h3>
+            <p>Full innsikt i lagerbevegelser og forbruk.</p>
+        </div>
     </div>
 </section>
 
 <footer>
-    © 2025 Logichain – Moderne logistikk
+    <p>© 2025 Logichain — Eiere: <a href="https://www.linkedin.com/in/einar-fredriksen-756375256">Einar Fredriksen</a> & Kaia</p>
 </footer>
-
-<script>
-/* Fun facts */
-const facts = [
-    "Den raskeste pakken med drone ble levert på under 8 minutter!",
-    "Over 90% av logistikkselskaper bruker automatiserte ruteplaner.",
-    "Logistikkoptimalisering kan redusere CO2-utslipp med opptil 25%."
-];
-function showFact() {
-    const randomFact = facts[Math.floor(Math.random() * facts.length)];
-    alert(randomFact);
-}
-
-/* Dark mode toggle */
-function toggleDarkMode() {
-    document.body.classList.toggle('dark');
-}
-
-/* Live counters */
-function countUp(id, target, duration) {
-    let start = 0;
-    const stepTime = Math.abs(Math.floor(duration / target));
-    const obj = document.getElementById(id);
-    const timer = setInterval(() => {
-        start++;
-        obj.innerText = start;
-        if(start>=target) clearInterval(timer);
-    }, stepTime);
-}
-countUp('stat1', 1200, 2000);
-countUp('stat2', 350, 2000);
-countUp('stat3', 75, 2000);
-countUp('stat4', 30, 2000);
-
-/* Scroll animations */
-const animatedElements = document.querySelectorAll('[data-animate]');
-function checkAnimate() {
-    const triggerBottom = window.innerHeight / 5 * 4;
-    animatedElements.forEach(el => {
-        const elTop = el.getBoundingClientRect().top;
-        if(elTop < triggerBottom) {
-            el.classList.add('animate');
-        }
-    });
-}
-window.addEventListener('scroll', checkAnimate);
-checkAnimate();
-</script>
 
 </body>
 </html>
