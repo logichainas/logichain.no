@@ -1,89 +1,325 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-    <meta charset="UTF-8">
-    <title>Routely – Logistikk i bevegelse</title>
+    <meta charset="UTF-8" />
+    <title>Logichain – Smart logistikk for moderne bedrifter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #f2f5f7;
-            color: #333;
+        /* -----------------------------------------------------
+           LOGICHAIN BRAND GUIDE
+        ----------------------------------------------------- */
+        :root {
+            --brand-blue: #0a3d62;
+            --brand-lightblue: #1e8bff;
+            --brand-bg: #f4f6f8;
+            --brand-dark: #1d1f21;
+            --brand-text: #333;
+            --brand-radius: 14px;
+            --transition: 0.25s ease;
         }
+
+        /* DARK MODE VARIABLES */
+        body.dark-mode {
+            --brand-bg: #121212;
+            --brand-text: #e3e3e3;
+            --brand-blue: #0a3d62;
+        }
+
+        /* -----------------------------------------------------
+           BASE DESIGN
+        ----------------------------------------------------- */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--brand-bg);
+            color: var(--brand-text);
+            transition: var(--transition);
+        }
+
+        /* -----------------------------------------------------
+           LOGO (SVG inline)
+        ----------------------------------------------------- */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .logo svg {
+            height: 55px;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+        }
+
+        /* -----------------------------------------------------
+           HEADER / HERO
+        ----------------------------------------------------- */
         header {
-            background: #0a3d62;
+            position: relative;
+            background: url('images/logistics-header.jpg') center/cover no-repeat;
             color: white;
-            padding: 40px 20px;
+            padding: 130px 20px;
             text-align: center;
         }
-        h1 {
+
+        header::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+        }
+
+        header .hero-content {
+            position: relative;
+            z-index: 3;
+            animation: fadeIn 1.2s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        header h1 {
+            font-size: 3.2rem;
             margin: 0;
-            font-size: 2.4rem;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            animation: fadeIn 1.5s ease forwards;
         }
-        section {
-            max-width: 900px;
-            margin: 40px auto;
+
+        header p {
+            font-size: 1.4rem;
+            margin-top: 10px;
+            opacity: 0.95;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 15px 32px;
+            background: var(--brand-lightblue);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--brand-radius);
+            font-size: 1.15rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .cta-btn:hover {
+            background: #0f6fd4;
+            transform: translateY(-3px);
+        }
+
+        /* DARK MODE BUTTON */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
             background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: none;
+            padding: 10px 16px;
+            border-radius: var(--brand-radius);
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 999;
         }
+
+        body.dark-mode .dark-mode-toggle {
+            background: #222;
+            color: white;
+        }
+
+        /* -----------------------------------------------------
+           CONTENT SECTIONS
+        ----------------------------------------------------- */
+        section {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 45px;
+            background: white;
+            border-radius: var(--brand-radius);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+            transition: var(--transition);
+        }
+
+        body.dark-mode section {
+            background: #1f1f1f;
+            color: #ddd;
+        }
+
         h2 {
-            color: #0a3d62;
+            color: var(--brand-blue);
+            margin-bottom: 15px;
+            font-size: 2rem;
         }
-        .owners {
-            margin-top: 40px;
-            font-style: italic;
-            color: #555;
+
+        /* -----------------------------------------------------
+           IMAGE GRID
+        ----------------------------------------------------- */
+        .image-grid {
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
         }
+
+        .image-grid img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            border-radius: var(--brand-radius);
+            transition: var(--transition);
+        }
+
+        .image-grid img:hover {
+            transform: scale(1.03);
+        }
+
+        /* -----------------------------------------------------
+           FORMS (Kontakt & Karriere)
+        ----------------------------------------------------- */
+        form {
+            display: grid;
+            gap: 20px;
+        }
+
+        input, textarea {
+            padding: 14px;
+            border-radius: var(--brand-radius);
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        textarea {
+            height: 140px;
+        }
+
+        button {
+            background: var(--brand-lightblue);
+            color: white;
+            padding: 14px 24px;
+            border: none;
+            border-radius: var(--brand-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        button:hover {
+            background: #0f6fd4;
+        }
+
+        /* -----------------------------------------------------
+           FOOTER
+        ----------------------------------------------------- */
         footer {
             text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            color: #777;
+            padding: 40px 20px;
+            color: #666;
+        }
+
+        /* -----------------------------------------------------
+           RESPONSIVE
+        ----------------------------------------------------- */
+        @media (max-width: 700px) {
+            header h1 {font-size: 2.3rem;}
+            header p {font-size: 1.1rem;}
+            section {margin: 20px 12px; padding: 25px;}
         }
     </style>
 </head>
+
 <body>
 
+<button class="dark-mode-toggle" onclick="document.body.classList.toggle('dark-mode')">
+    Dark / Light
+</button>
+
+<!-- -----------------------------------------------------
+     HERO HEADER
+--------------------------------------------------------- -->
 <header>
-    <h1>Routely</h1>
-    <p>Fremtidens løsning for smartere logistikk</p>
+    <div class="hero-content">
+
+        <div class="logo">
+            <!-- LOGICHAIN LOGO (SVG) -->
+            <svg viewBox="0 0 100 100" fill="#1e8bff">
+                <rect x="15" y="25" width="70" height="12" rx="4"/>
+                <rect x="15" y="45" width="70" height="12" rx="4"/>
+                <rect x="15" y="65" width="70" height="12" rx="4"/>
+            </svg>
+            <span class="logo-text">Logichain</span>
+        </div>
+
+        <p>Smart, datadrevet logistikk for fremtidens bedrifter</p>
+        <a class="cta-btn" href="#karriere">Bli med og bygg Logichain</a>
+    </div>
 </header>
 
+<!-- -----------------------------------------------------
+     OM OSS
+--------------------------------------------------------- -->
 <section>
-    <h2>Om oss</h2>
+    <h2>Om Logichain</h2>
     <p>
-        Routely bygger et moderne, datadrevet system for logistikk og vareflyt. 
-        Målet vårt er å gjøre det enklere for bedrifter å håndtere transport, 
-        kostnader, ruter og forsendelser – alt samlet i ett system som bare fungerer.
+        Logichain utvikler et moderne logistikksystem som gir bedrifter full oversikt over 
+        kostnader, ruter, frakt, leverandører og dataflyt – alt samlet i ett brukervennlig system.
     </p>
 
-    <h2>Vi søker systemutvikler</h2>
-    <p>
-        Vi ser etter en dyktig og fremoverlent systemutvikler som vil være med å bygge 
-        et nytt logistikksystem fra bunnen av. Du får stor påvirkningskraft og muligheten 
-        til å forme teknologien vi skal bruke.
-    </p>
-
-    <p>
-        Passer for deg som liker:  
-        – å bygge nye løsninger fra scratch  
-        – automatisering og dataflyt  
-        – smarte, enkle systemer som gjør en forskjell  
-    </p>
-
-    <p>
-        Ta kontakt om du er nysgjerrig – vi tar gjerne en prat.
-    </p>
-
-    <div class="owners">
-        <strong>Eiere:</strong> Einar & Kaia
+    <div class="image-grid">
+        <img src="images/truck.jpg" alt="Lastebil logistikk">
+        <img src="images/warehouse.jpg" alt="Lager logistikk">
+        <img src="images/containers.jpg" alt="Container havn">
     </div>
 </section>
 
+<!-- -----------------------------------------------------
+     KARRIERE
+--------------------------------------------------------- -->
+<section id="karriere">
+    <h2>Vi søker systemutvikler</h2>
+    <p>
+        Logichain bygges fra bunnen av – og du kan bli med å forme både teknologi og produkt.
+    </p>
+
+    <form action="mailto:einar@logichain.no" method="POST" enctype="text/plain">
+        <input type="text" name="Navn" placeholder="Navnet ditt" required>
+        <input type="email" name="E-post" placeholder="E-post" required>
+        <textarea name="Melding" placeholder="Hvorfor ønsker du å bli med?"></textarea>
+        <button type="submit">Send søknad</button>
+    </form>
+
+    <p style="margin-top: 25px; font-style: italic;">
+        <strong>Eier:</strong> Einar og Kaia
+    </p>
+</section>
+
+<!-- -----------------------------------------------------
+     KONTAKT OSS
+--------------------------------------------------------- -->
+<section>
+    <h2>Kontakt oss</h2>
+    <form action="mailto:einar@logichain.no" method="POST" enctype="text/plain">
+        <input type="text" name="Navn" placeholder="Navn" required>
+        <input type="email" name="E-post" placeholder="E-post" required>
+        <textarea name="Beskrivelse" placeholder="Hva kan vi hjelpe deg med?" required></textarea>
+        <button type="submit">Send melding</button>
+    </form>
+</section>
+
 <footer>
-    © 2025 Routely – Logistikk i bevegelse
+    © 2025 Logichain – Smart logistikk i bevegelse
 </footer>
 
 </body>
