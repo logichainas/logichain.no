@@ -1,156 +1,303 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-    <meta charset="UTF-8">
-    <title>Kontakt – Logichain</title>
-    <link rel="stylesheet" href="assets/styles.css">
-    <script defer src="assets/scripts.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Book Transport – Logichain</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    :root{--bg:#f5f7fa;--card:#fff;--primary:#0a3d62}
+    body{font-family:Inter,Arial,Helvetica,sans-serif;margin:0;background:var(--bg);color:#111}
+    .container{max-width:1200px;margin:28px auto;padding:20px}
+    header{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .logo{font-weight:700;letter-spacing:2px}
 
-    <style>
-        /* === Booking‑style layout === */
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f7fa;
-            margin: 0;
-        }
+    .grid{display:grid;grid-template-columns:1fr 420px;gap:24px}
+    .card{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 20px rgba(10,10,10,0.06)}
+    h1{margin:0 0 8px}
+    p.lead{margin:0 0 18px;color:#555}
 
-        .booking-container {
-            max-width: 1100px;
-            margin: 40px auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            padding: 0 20px;
-        }
+    label{font-size:13px;font-weight:600;margin-bottom:6px;display:block}
+    input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #d4d8dd;font-size:14px;margin-bottom:12px}
+    textarea{min-height:110px}
 
-        .card {
-            background: #fff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .actions{display:flex;gap:12px}
+    button{background:var(--primary);color:#fff;padding:12px 16px;border-radius:8px;border:none;cursor:pointer;font-weight:600}
+    button.secondary{background:#eef3fb;color:var(--primary)}
 
-        .card h2 {
-            margin-top: 0;
-            font-size: 26px;
-        }
+    .map{height:320px;border-radius:8px;overflow:hidden}
+    .summary{font-size:14px;color:#222}
 
-        input, textarea, select {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0 18px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 15px;
-        }
+    .price{font-size:20px;font-weight:700;margin-top:10px}
+    .muted{color:#666;font-size:13px}
 
-        textarea { height: 120px; }
+    .stepper{display:flex;gap:10px;margin-bottom:14px}
+    .step{padding:8px 12px;border-radius:999px;background:#eef3fb;color:var(--primary);font-weight:600}
 
-        .info-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        button {
-            width: 100%;
-            padding: 14px;
-            background: #0a3d62;
-            border: none;
-            color: white;
-            font-size: 17px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        button:hover { background: #062a44; }
-
-        .tooltip {
-            background: #0077cc;
-            color: #fff;
-            padding: 2px 6px;
-            border-radius: 50%;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        /* Dark mode compatible */
-        body.dark-mode .card { background: #1f1f1f; color: white; }
-        body.dark-mode input, body.dark-mode select, body.dark-mode textarea {
-            background: #2b2b2b;
-            color: #fff;
-            border: 1px solid #555;
-        }
-    </style>
+    @media(max-width:980px){.grid{grid-template-columns:1fr;}.map{height:220px}}
+  </style>
 </head>
-
 <body>
-<header>
-    <nav class="navbar">
-        <div class="logo">LOGICHAIN</div>
-        <ul class="nav-links">
-            <li><a href="index.html">Hjem</a></li>
-            <li><a href="om.html">Om oss</a></li>
-            <li><a href="tjenester.html">Tjenester</a></li>
-            <li><a href="karriere.html">Karriere</a></li>
-            <li><a href="kontakt.html" class="active">Kontakt</a></li>
-        </ul>
-        <button class="theme-toggle" id="themeToggle">🌓</button>
-    </nav>
-</header>
+  <div class="container">
+    <header>
+      <div class="logo">LOGICHAIN</div>
+      <nav>
+        <a href="index.html">Hjem</a>
+      </nav>
+    </header>
 
-<section class="page-header" style="text-align:center; padding:40px 20px;">
-    <h1>Bestill transport</h1>
-    <p>Fyll inn detaljer under – vi svarer vanligvis innen 24 timer.</p>
-</section>
+    <main>
+      <div class="card">
+        <div class="stepper">
+          <div class="step">1. Details</div>
+          <div class="step">2. Review</div>
+          <div class="step">3. Confirm</div>
+        </div>
+        <h1>Book transport</h1>
+        <p class="lead">Complete the form on the right. We calculate the actual driving distance and show carrier price tiers.</p>
 
-<div class="booking-container">
-
-    <!-- Kontaktmelding -->
-    <div class="card">
-        <h2>Kontakt oss</h2>
-        <form class="contact-form" action="mailto:einar@logichain.no" method="POST" enctype="text/plain">
-            <input type="text" name="navn" placeholder="Navn" required>
-            <input type="email" name="email" placeholder="E-post" required>
-            <textarea name="melding" placeholder="Melding" required></textarea>
-            <button type="submit">Send melding</button>
-        </form>
-    </div>
-
-    <!-- Booking-form -->
-    <div class="card">
-        <h2>Transportforespørsel</h2>
-        <form class="shipping-form" action="mailto:einar@logichain.no" method="POST" enctype="text/plain">
-
-            <div class="info-row">
-                <input type="text" name="sender_country" placeholder="Avsenderland" required>
-                <input type="text" name="sender_address" placeholder="Avsenderadresse" required>
+        <div class="grid" style="margin-top:18px">
+          <!-- LEFT: Map + Summary -->
+          <div>
+            <div class="card" style="margin-bottom:18px">
+              <h3 style="margin-top:0">Route map</h3>
+              <div id="map" class="map">Map loading…</div>
             </div>
 
-            <div class="info-row">
-                <input type="number" name="weight" step="0.01" placeholder="Vekt (kg)" required>
-                <input type="text" name="size" placeholder="Størrelse (L × B × H cm)" required>
+            <div class="card">
+              <h3 style="margin-top:0">Summary</h3>
+              <div class="summary">
+                <div>Distance: <span id="distanceText">—</span></div>
+                <div>Estimated delivery: <span id="etaText">—</span></div>
+                <div class="price" id="bestPrice">—</div>
+                <div class="muted" id="priceBreakdown">—</div>
+              </div>
             </div>
+          </div>
 
-            <div class="info-row">
-                <input type="text" name="receiver_country" placeholder="Mottakerland" required>
-                <input type="text" name="receiver_address" placeholder="Mottakeradresse" required>
-            </div>
+          <!-- RIGHT: Booking form -->
+          <aside>
+            <form id="bookingForm" class="card">
+              <h3 style="margin-top:0">Shipment details</h3>
 
-            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; margin-bottom:20px;">
-                <input type="checkbox" name="non_stackable">
-                Non‑stackable
-                <span class="tooltip" title="Non‑stackable betyr at godset ikke kan stables – ofte pga. form eller skjørhet">i</span>
-            </label>
+              <div class="two-col">
+                <div>
+                  <label for="sender_country">Sender country</label>
+                  <input id="sender_country" name="sender_country" placeholder="e.g. Norway" required>
+                </div>
+                <div>
+                  <label for="receiver_country">Receiver country</label>
+                  <input id="receiver_country" name="receiver_country" placeholder="e.g. Sweden" required>
+                </div>
+              </div>
 
-            <button type="submit">Send forespørsel</button>
-        </form>
-    </div>
-</div>
+              <label for="sender_address">Sender address</label>
+              <input id="sender_address" name="sender_address" placeholder="Street, postal code, city" required>
 
-<footer style="text-align:center; padding:30px;">
-    <p>© 2025 Logichain</p>
-</footer>
+              <label for="receiver_address">Receiver address</label>
+              <input id="receiver_address" name="receiver_address" placeholder="Street, postal code, city" required>
 
+              <div class="two-col">
+                <div>
+                  <label for="weight">Weight (kg)</label>
+                  <input id="weight" name="weight" type="number" step="0.01" value="10" required>
+                </div>
+                <div>
+                  <label for="size">Size (L×W×H cm)</label>
+                  <input id="size" name="size" placeholder="e.g. 120x80x60" required>
+                </div>
+              </div>
+
+              <label style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+                <input type="checkbox" id="non_stackable" name="non_stackable">
+                <span>Non-stackable</span>
+                <span style="margin-left:6px;background:#0a66c2;color:#fff;padding:4px 7px;border-radius:999px;font-size:12px;" title="Non-stackable betyr at godset ikke kan stables – ofte på grunn av form eller skjørhet">i</span>
+              </label>
+
+              <label for="service">Service level</label>
+              <select id="service" name="service">
+                <option value="standard">Standard</option>
+                <option value="economy">Economy (cheaper)</option>
+                <option value="express">Express (faster)</option>
+              </select>
+
+              <label for="notes">Additional notes</label>
+              <textarea id="notes" name="notes" placeholder="E.g. fragile, pick-up window"></textarea>
+
+              <div style="display:flex;gap:12px;margin-top:8px">
+                <button id="estimateBtn" type="button">Calculate & Show Route</button>
+                <button id="sendBtn" type="submit" class="secondary">Send booking request</button>
+              </div>
+
+              <input type="hidden" name="distance_km" id="distance_km">
+              <input type="hidden" name="estimated_price" id="estimated_price">
+
+            </form>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <footer style="text-align:center;margin-top:18px;color:#666">© 2025 Logichain</footer>
+  </div>
+
+
+  <!-- MAPBOX + JS -->
+  <!-- YOU MUST insert your Mapbox access token in MAPBOX_TOKEN variable below -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet" />
+
+  <script>
+  // ---------- Configuration ----------
+  const MAPBOX_TOKEN = 'YOUR_MAPBOX_ACCESS_TOKEN_HERE'; // <<---- REPLACE WITH YOUR TOKEN
+  const mapStyle = 'mapbox://styles/mapbox/streets-v11';
+
+  // Price model (market-based approximation)
+  // base + per km + per kg + volumetric surcharge
+  function priceModel(distanceKm, weightKg, volumetricSurcharge, tier) {
+    const base = 150; // NOK
+    const perKm = 4; // nok/km
+    const perKg = 0.9; // nok/kg
+    const raw = base + (distanceKm * perKm) + (weightKg * perKg) + volumetricSurcharge;
+    const multipliers = { economy: 0.85, standard: 1.0, express: 1.35 };
+    return Math.round(raw * (multipliers[tier] || 1.0));
+  }
+
+  // ---------- Helpers ----------
+  function parseSize(sizeStr) {
+    // Accept formats like 120x80x60 or 120×80×60
+    const s = sizeStr.replace(/×/g,'x').toLowerCase();
+    const parts = s.split('x').map(p => parseFloat(p.trim()));
+    if (parts.length === 3 && parts.every(n => !isNaN(n))) return parts;
+    return null;
+  }
+
+  function calcVolumetricWeight(L, W, H) {
+    return (L * W * H) / 5000; // standard divisor
+  }
+
+  // ---------- Map & Directions ----------
+  mapboxgl.accessToken = MAPBOX_TOKEN;
+  const map = new mapboxgl.Map({ container: 'map', style: mapStyle, center: [10.75, 59.91], zoom: 5 });
+  let routeLayerId = null;
+
+  async function geocode(address) {
+    const q = encodeURIComponent(address);
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${q}.json?access_token=${MAPBOX_TOKEN}&limit=1`;
+    const res = await fetch(url);
+    const j = await res.json();
+    if (j.features && j.features.length) {
+      return j.features[0].center; // [lon, lat]
+    }
+    return null;
+  }
+
+  async function getRoute(start, end) {
+    // start, end are [lon,lat]
+    const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?geometries=geojson&overview=full&access_token=${MAPBOX_TOKEN}`;
+    const res = await fetch(url);
+    const j = await res.json();
+    if (j.routes && j.routes.length) return j.routes[0];
+    return null;
+  }
+
+  function drawRoute(geojson) {
+    // remove existing
+    if (map.getSource('route')) {
+      map.removeLayer('routeLine');
+      map.removeSource('route');
+    }
+    map.addSource('route', { type: 'geojson', data: geojson });
+    map.addLayer({ id: 'routeLine', type: 'line', source: 'route', layout: { 'line-join':'round','line-cap':'round' }, paint: { 'line-color':'#0a66c2','line-width':5 } });
+    // fit bounds
+    const coords = geojson.features[0].geometry.coordinates;
+    const bounds = coords.reduce(function(b, coord) { return b.extend(coord); }, new mapboxgl.LngLatBounds(coords[0], coords[0]));
+    coords.forEach(c => bounds.extend(c));
+    map.fitBounds(bounds, { padding:40 });
+  }
+
+  // ---------- UI Actions ----------
+  const estimateBtn = document.getElementById('estimateBtn');
+  const distanceText = document.getElementById('distanceText');
+  const etaText = document.getElementById('etaText');
+  const bestPrice = document.getElementById('bestPrice');
+  const priceBreakdown = document.getElementById('priceBreakdown');
+
+  estimateBtn.addEventListener('click', async () => {
+    const sAddr = document.getElementById('sender_address').value + ', ' + document.getElementById('sender_country').value;
+    const rAddr = document.getElementById('receiver_address').value + ', ' + document.getElementById('receiver_country').value;
+    if (!sAddr || !rAddr) { alert('Please fill sender and receiver address & country'); return; }
+
+    estimateBtn.disabled = true; estimateBtn.textContent = 'Calculating…';
+
+    try {
+      const sCoord = await geocode(sAddr);
+      const rCoord = await geocode(rAddr);
+      if (!sCoord || !rCoord) { alert('Could not find one or both addresses. Please be more specific.'); return; }
+
+      const route = await getRoute(sCoord, rCoord);
+      if (!route) { alert('Could not calculate route.'); return; }
+
+      // draw route
+      drawRoute({ type:'FeatureCollection', features:[ { type:'Feature', geometry: route.geometry } ] });
+
+      const distanceMeters = route.distance; // meters
+      const distanceKm = Math.round(distanceMeters / 100) / 10; // one decimal
+      document.getElementById('distance_km').value = distanceKm;
+      distanceText.textContent = distanceKm + ' km';
+
+      // ETA
+      const durationMin = Math.round(route.duration / 60);
+      etaText.textContent = durationMin + ' min (drive time)';
+
+      // pricing
+      const weight = parseFloat(document.getElementById('weight').value) || 0;
+      const sizeStr = document.getElementById('size').value;
+      const dims = parseSize(sizeStr);
+      let volumetric = 0;
+      if (dims) { volumetric = calcVolumetricWeight(dims[0], dims[1], dims[2]); }
+      const volSurcharge = Math.round(volumetric * 20);
+
+      const economy = priceModel(distanceKm, weight, volSurcharge, 'economy');
+      const standard = priceModel(distanceKm, weight, volSurcharge, 'standard');
+      const express = priceModel(distanceKm, weight, volSurcharge, 'express');
+
+      bestPrice.textContent = `From ${economy} NOK (economy)`;
+      priceBreakdown.innerHTML = `Economy: ${economy} NOK<br>Standard: ${standard} NOK<br>Express: ${express} NOK<br>Volumetric surcharge: ${volSurcharge} NOK`;
+
+      document.getElementById('estimated_price').value = standard;
+
+    } catch (err) {
+      console.error(err); alert('Error calculating route — see console for details');
+    } finally {
+      estimateBtn.disabled = false; estimateBtn.textContent = 'Calculate & Show Route';
+    }
+  });
+
+  // ---------- Submit handler ----------
+  const bookingForm = document.getElementById('bookingForm');
+  bookingForm.addEventListener('submit', function(e){
+    // For reliable delivery we recommend sending to a backend endpoint.
+    // This client-side example will open the default mail client as a fallback.
+    e.preventDefault();
+
+    const form = new FormData(bookingForm);
+    const payload = {};
+    form.forEach((v,k) => payload[k]=v);
+
+    // Build email body
+    const bodyLines = [];
+    for (const k in payload) bodyLines.push(`${k}: ${payload[k]}`);
+    const body = encodeURIComponent(bodyLines.join('
+'));
+    const subject = encodeURIComponent('Logichain booking request');
+    const mailto = `mailto:einar@logichain.no?subject=${subject}&body=${body}`;
+
+    // Open mail client (fallback). For production, POST payload to your server.
+    window.location.href = mailto;
+  });
+
+  </script>
 </body>
 </html>
