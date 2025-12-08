@@ -2,25 +2,172 @@
 <html lang="no">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Karriere – Logichain</title>
-    <link rel="stylesheet" href="assets/styles.css">
-    <script defer src="assets/scripts.js"></script>
+    <style>
+        /* Global styles */
+        :root {
+            --bg-color: #121212;
+            --text-color: #f0f0f0;
+            --card-bg: #1e1e1e;
+            --accent: #0abde3;
+            --btn-bg: #0abde3;
+            --btn-text: #121212;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        header {
+            background-color: #1a1a1a;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            transition: color 0.3s;
+        }
+
+        .nav-links a.active, .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 3rem 1rem 1rem 1rem;
+        }
+
+        .page-header h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: #ccc;
+        }
+
+        .intro, .benefits {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .intro p, .benefits p {
+            line-height: 1.6;
+        }
+
+        .benefits ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+        }
+
+        .job-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .job-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: transform 0.3s;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .job-card h3 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        .apply-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            background-color: #1a1a1a;
+            color: #888;
+            margin-top: 2rem;
+        }
+
+        /* Additional styling */
+        .contact-section {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            text-align: center;
+        }
+
+        .contact-section a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .contact-section a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
 
 <header>
-    <nav class="navbar">
-        <div class="logo">LOGICHAIN</div>
-        <ul class="nav-links">
-            <li><a href="index.html">Hjem</a></li>
-            <li><a href="om.html">Om oss</a></li>
-            <li><a href="tjenester.html">Tjenester</a></li>
-            <li><a href="karriere.html" class="active">Karriere</a></li>
-            <li><a href="kontakt.html">Kontakt</a></li>
-        </ul>
-        <button class="theme-toggle" id="themeToggle">🌓</button>
-    </nav>
+    <div class="logo">LOGICHAIN</div>
+    <ul class="nav-links">
+        <li><a href="index.html">Hjem</a></li>
+        <li><a href="om.html">Om oss</a></li>
+        <li><a href="tjenester.html">Tjenester</a></li>
+        <li><a href="karriere.html" class="active">Karriere</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle">🌓</button>
 </header>
 
 <section class="page-header">
@@ -28,25 +175,67 @@
     <p>Bli med og bygg fremtidens logistikksystem.</p>
 </section>
 
+<section class="intro">
+    <p>Hos Logichain jobber vi med cutting-edge teknologi for å effektivisere logistikk og forsyningskjeder. Vi søker engasjerte personer som ønsker å forme fremtidens digitale løsninger innen transport og logistikk.</p>
+</section>
+
+<section class="benefits">
+    <h2>Hvorfor jobbe hos oss?</h2>
+    <ul>
+        <li>Spennende og varierte arbeidsoppgaver</li>
+        <li>Mulighet til å forme selskapets teknologiske plattform</li>
+        <li>Kompetente og inkluderende kolleger</li>
+        <li>Fleksible arbeidstider og moderne kontorløsninger</li>
+        <li>Mulighet for faglig utvikling og kurs</li>
+    </ul>
+</section>
+
 <section class="job-list">
 
     <div class="job-card">
         <h3>Systemutvikler</h3>
-        <p>Vi ser etter en utvikler som kan bygge kjernen av Logichain-plattformen.</p>
+        <p>Vi ser etter en utvikler som kan bygge kjernen av Logichain-plattformen, med fokus på backend og dataintegrasjon.</p>
         <a class="apply-btn" href="mailto:post@logichain.no">Søk nå</a>
     </div>
 
     <div class="job-card">
         <h3>Frontend-utvikler</h3>
-        <p>Design moderne og effektive grensesnitt.</p>
+        <p>Design moderne og effektive grensesnitt for våre kunder og interne verktøy.</p>
+        <a class="apply-btn" href="mailto:post@logichain.no">Søk nå</a>
+    </div>
+
+    <div class="job-card">
+        <h3>Produktansvarlig</h3>
+        <p>Koordiner utvikling, prioriter funksjonalitet og sørg for at løsningen møter kundens behov.</p>
+        <a class="apply-btn" href="mailto:post@logichain.no">Søk nå</a>
+    </div>
+
+    <div class="job-card">
+        <h3>Dataanalytiker</h3>
+        <p>Analyser logistikkdata for å optimalisere prosesser og bidra til beslutningsstøtte.</p>
         <a class="apply-btn" href="mailto:post@logichain.no">Søk nå</a>
     </div>
 
 </section>
 
+<section class="contact-section">
+    <p>Har du spørsmål om stillingene? Kontakt oss på <a href="mailto:post@logichain.no">post@logichain.no</a> eller via LinkedIn: <a href="https://www.linkedin.com/in/einar-fredriksen-756375256" target="_blank">Einar Fredriksen</a></p>
+</section>
+
 <footer>
     <p>© 2025 Logichain</p>
 </footer>
+
+<script>
+    // Siden skal alltid starte i mørk modus
+    document.body.classList.add('dark-mode');
+
+    // Tema toggle funksjon (valgfritt, men kan brukes senere)
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+    });
+</script>
 
 </body>
 </html>
