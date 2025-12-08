@@ -1,233 +1,175 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Book Transport – Logichain</title>
-  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" />
-  <style>
-    /* ---------- DARK THEME VARIABLES ---------- */
-    :root {
-      --bg: #121212;
-      --card: #1e1e1e;
-      --primary: #0a66c2;
-      --text: #f5f5f5;
-      --muted: #aaa;
-      --accent: #0a66c2;
-      --shadow: rgba(0,0,0,0.5);
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Book Transport – Logichain</title>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" />
+<style>
+/* ---------- DARK THEME VARIABLES ---------- */
+:root {
+    --bg: #121212;
+    --card: #1e1e1e;
+    --primary: #0a66c2;
+    --text: #f5f5f5;
+    --muted: #aaa;
+    --accent: #0a66c2;
+    --shadow: rgba(0,0,0,0.5);
+}
 
-    body {
-      font-family: 'Inter', Arial, Helvetica, sans-serif;
-      margin:0;
-      background:var(--bg);
-      color: var(--text);
-      transition: background 0.3s, color 0.3s;
-    }
+body {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    margin:0;
+    background:var(--bg);
+    color: var(--text);
+    transition: background 0.3s, color 0.3s;
+}
+a { color: var(--primary); text-decoration:none; }
+a:hover { text-decoration:underline; }
 
-    a { color: var(--primary); text-decoration:none; }
-    a:hover { text-decoration:underline; }
-
-    .container{max-width:1200px;margin:28px auto;padding:20px}
-
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:12px 0;
-      border-bottom:1px solid #333;
-    }
-    .logo{font-weight:700;letter-spacing:2px;color:var(--primary);font-size:1.6em}
-
-    nav a{margin-left:18px;font-weight:500;font-size:0.95em}
-
-    .grid{display:grid;grid-template-columns:1fr 420px;gap:24px;margin-top:18px}
-    .card{
-      background:var(--card);
-      padding:24px;
-      border-radius:12px;
-      box-shadow:0 6px 20px var(--shadow);
-      transition: transform 0.2s;
-    }
-    .card:hover{transform: translateY(-2px);}
-
-    h1{margin:0 0 8px;font-weight:700;font-size:1.8em;color:#fff}
-    h3{margin-top:0;color:#fff}
-    p.lead{margin:0 0 18px;color:var(--muted)}
-
-    label{font-size:13px;font-weight:600;margin-bottom:6px;display:block}
-    input,select,textarea{
-      width:100%;
-      padding:12px;
-      border-radius:8px;
-      border:1px solid #333;
-      background:#1a1a1a;
-      color:#fff;
-      font-size:14px;
-      margin-bottom:12px;
-      transition:border 0.2s, background 0.2s;
-    }
-    input:focus, select:focus, textarea:focus{border-color:var(--primary); outline:none;}
-    textarea{min-height:120px}
-
-    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .actions{display:flex;gap:12px}
-
-    button{
-      background:var(--primary);
-      color:#fff;
-      padding:12px 20px;
-      border-radius:8px;
-      border:none;
-      cursor:pointer;
-      font-weight:600;
-      transition: background 0.2s, transform 0.2s;
-    }
-    button:hover{background:#084c8d; transform: translateY(-1px);}
-    button.secondary{background:#2a2a2a;color:var(--primary);}
-    button.secondary:hover{background:#333;}
-
-    .map{
-      height:320px;
-      border-radius:8px;
-      overflow:hidden;
-      border:1px solid #333;
-    }
-    .summary{font-size:14px;color:#fff}
-    .price{font-size:20px;font-weight:700;margin-top:10px;color:var(--primary)}
-    .muted{color:var(--muted);font-size:13px}
-
-    .stepper{display:flex;gap:10px;margin-bottom:14px}
-    .step{
-      padding:8px 12px;
-      border-radius:999px;
-      background:#2a2a2a;
-      color:var(--primary);
-      font-weight:600;
-      font-size:0.85em;
-    }
-
-    footer{
-      text-align:center;
-      margin-top:28px;
-      color:var(--muted);
-      font-size:0.9em;
-    }
-
-    @media(max-width:980px){.grid{grid-template-columns:1fr;}.map{height:220px}}
-  </style>
+.container{max-width:1200px;margin:28px auto;padding:20px}
+header{ display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid #333; }
+.logo{font-weight:700;letter-spacing:2px;color:var(--primary);font-size:1.6em}
+nav a{margin-left:18px;font-weight:500;font-size:0.95em}
+.grid{display:grid;grid-template-columns:1fr 420px;gap:24px;margin-top:18px}
+.card{ background:var(--card); padding:24px; border-radius:12px; box-shadow:0 6px 20px var(--shadow); transition: transform 0.2s; }
+.card:hover{transform: translateY(-2px);}
+h1{margin:0 0 8px;font-weight:700;font-size:1.8em;color:#fff}
+h3{margin-top:0;color:#fff}
+p.lead{margin:0 0 18px;color:var(--muted)}
+label{font-size:13px;font-weight:600;margin-bottom:6px;display:block}
+input,select,textarea{ width:100%; padding:12px; border-radius:8px; border:1px solid #333; background:#1a1a1a; color:#fff; font-size:14px; margin-bottom:12px; transition:border 0.2s, background 0.2s; }
+input:focus, select:focus, textarea:focus{border-color:var(--primary); outline:none;}
+textarea{min-height:120px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.actions{display:flex;gap:12px}
+button{ background:var(--primary); color:#fff; padding:12px 20px; border-radius:8px; border:none; cursor:pointer; font-weight:600; transition: background 0.2s, transform 0.2s; }
+button:hover{background:#084c8d; transform: translateY(-1px);}
+button.secondary{background:#2a2a2a;color:var(--primary);}
+button.secondary:hover{background:#333;}
+.map{ height:320px; border-radius:8px; overflow:hidden; border:1px solid #333; }
+.summary{font-size:14px;color:#fff}
+.price{font-size:20px;font-weight:700;margin-top:10px;color:var(--primary)}
+.muted{color:var(--muted);font-size:13px}
+.stepper{display:flex;gap:10px;margin-bottom:14px}
+.step{ padding:8px 12px; border-radius:999px; background:#2a2a2a; color:var(--primary); font-weight:600; font-size:0.85em; }
+footer{ text-align:center; margin-top:28px; color:var(--muted); font-size:0.9em; }
+@media(max-width:980px){.grid{grid-template-columns:1fr;}.map{height:220px}}
+</style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="logo">LOGICHAIN</div>
-      <nav>
-        <a href="index.html">Hjem</a>
-      </nav>
-    </header>
+<div class="container">
+<header>
+    <div class="logo">LOGICHAIN</div>
+    <nav><a href="index.html">Hjem</a></nav>
+</header>
 
-    <main>
-      <div class="card">
-        <div class="stepper">
-          <div class="step">1. Details</div>
-          <div class="step">2. Review</div>
-          <div class="step">3. Confirm</div>
-        </div>
-        <h1>Book transport</h1>
-        <p class="lead">Complete the form on the right. We calculate the actual driving distance and show carrier price tiers.</p>
+<main>
+<div class="card">
+    <div class="stepper">
+        <div class="step">1. Details</div>
+        <div class="step">2. Review</div>
+        <div class="step">3. Confirm</div>
+    </div>
 
-        <div class="grid">
-          <!-- LEFT: Map + Summary -->
-          <div>
+    <h1>Book transport</h1>
+    <p class="lead">Complete the form on the right. We calculate the actual driving distance and show carrier price tiers.</p>
+
+    <div class="grid">
+        <!-- LEFT: Map + Summary -->
+        <div>
             <div class="card" style="margin-bottom:18px">
-              <h3>Route map</h3>
-              <div id="map" class="map">Map loading…</div>
+                <h3>Route map</h3>
+                <div id="map" class="map">Map loading…</div>
             </div>
 
             <div class="card">
-              <h3>Summary</h3>
-              <div class="summary">
-                <div>Distance: <span id="distanceText">—</span></div>
-                <div>Estimated delivery: <span id="etaText">—</span></div>
-                <div class="price" id="bestPrice">—</div>
-                <div class="muted" id="priceBreakdown">—</div>
-              </div>
+                <h3>Summary</h3>
+                <div class="summary">
+                    <div>Distance: <span id="distanceText">—</span></div>
+                    <div>Estimated delivery: <span id="etaText">—</span></div>
+                    <div class="price" id="bestPrice">—</div>
+                    <div class="muted" id="priceBreakdown">—</div>
+                </div>
             </div>
-          </div>
-
-          <!-- RIGHT: Booking form -->
-          <aside>
-            <form id="bookingForm" class="card">
-              <h3>Shipment details</h3>
-
-              <div class="two-col">
-                <div>
-                  <label for="sender_country">Sender country</label>
-                  <input id="sender_country" name="sender_country" placeholder="e.g. Norway" required>
-                </div>
-                <div>
-                  <label for="receiver_country">Receiver country</label>
-                  <input id="receiver_country" name="receiver_country" placeholder="e.g. Sweden" required>
-                </div>
-              </div>
-
-              <label for="sender_address">Sender address</label>
-              <input id="sender_address" name="sender_address" placeholder="Street, postal code, city" required>
-
-              <label for="receiver_address">Receiver address</label>
-              <input id="receiver_address" name="receiver_address" placeholder="Street, postal code, city" required>
-
-              <div class="two-col">
-                <div>
-                  <label for="weight">Weight (kg)</label>
-                  <input id="weight" name="weight" type="number" step="0.01" value="10" required>
-                </div>
-                <div>
-                  <label for="size">Size (L×W×H cm)</label>
-                  <input id="size" name="size" placeholder="e.g. 120x80x60" required>
-                </div>
-              </div>
-
-              <label style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-                <input type="checkbox" id="non_stackable" name="non_stackable">
-                <span>Non-stackable</span>
-                <span style="margin-left:6px;background:#0a66c2;color:#fff;padding:4px 7px;border-radius:999px;font-size:12px;" title="Non-stackable betyr at godset ikke kan stables – ofte på grunn av form eller skjørhet">i</span>
-              </label>
-
-              <label for="service">Service level</label>
-              <select id="service" name="service">
-                <option value="standard">Standard</option>
-                <option value="economy">Economy (cheaper)</option>
-                <option value="express">Express (faster)</option>
-              </select>
-
-              <label for="notes">Additional notes</label>
-              <textarea id="notes" name="notes" placeholder="E.g. fragile, pick-up window"></textarea>
-
-              <div style="display:flex;gap:12px;margin-top:8px">
-                <button id="estimateBtn" type="button">Calculate & Show Route</button>
-                <button id="sendBtn" type="submit" class="secondary">Send booking request</button>
-              </div>
-
-              <input type="hidden" name="distance_km" id="distance_km">
-              <input type="hidden" name="estimated_price" id="estimated_price">
-            </form>
-          </aside>
         </div>
-      </div>
-    </main>
 
-    <footer>© 2025 Logichain</footer>
-  </div>
+        <!-- RIGHT: Booking form -->
+        <aside>
+            <form id="bookingForm" class="card">
+                <h3>Shipment details</h3>
+                <div class="two-col">
+                    <div>
+                        <label for="sender_country">Sender country</label>
+                        <input id="sender_country" name="sender_country" placeholder="e.g. Norway" required>
+                    </div>
+                    <div>
+                        <label for="receiver_country">Receiver country</label>
+                        <input id="receiver_country" name="receiver_country" placeholder="e.g. Sweden" required>
+                    </div>
+                </div>
+                <label for="sender_address">Sender address</label>
+                <input id="sender_address" name="sender_address" placeholder="Street, postal code, city" required>
+                <label for="receiver_address">Receiver address</label>
+                <input id="receiver_address" name="receiver_address" placeholder="Street, postal code, city" required>
+                <div class="two-col">
+                    <div>
+                        <label for="weight">Weight (kg)</label>
+                        <input id="weight" name="weight" type="number" step="0.01" value="10" required>
+                    </div>
+                    <div>
+                        <label for="size">Size (L×W×H cm)</label>
+                        <input id="size" name="size" placeholder="e.g. 120x80x60" required>
+                    </div>
+                </div>
+                <label style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+                    <input type="checkbox" id="non_stackable" name="non_stackable">
+                    <span>Non-stackable</span>
+                    <span style="margin-left:6px;background:#0a66c2;color:#fff;padding:4px 7px;border-radius:999px;font-size:12px;" title="Non-stackable betyr at godset ikke kan stables – ofte på grunn av form eller skjørhet">i</span>
+                </label>
+                <label for="service">Service level</label>
+                <select id="service" name="service">
+                    <option value="standard">Standard</option>
+                    <option value="economy">Economy (cheaper)</option>
+                    <option value="express">Express (faster)</option>
+                </select>
+                <label for="notes">Additional notes</label>
+                <textarea id="notes" name="notes" placeholder="E.g. fragile, pick-up window"></textarea>
+                <div style="display:flex;gap:12px;margin-top:8px">
+                    <button id="estimateBtn" type="button">Calculate & Show Route</button>
+                    <button id="sendBtn" type="submit" class="secondary">Send booking request</button>
+                </div>
+                <input type="hidden" name="distance_km" id="distance_km">
+                <input type="hidden" name="estimated_price" id="estimated_price">
+            </form>
+        </aside>
+    </div>
+</div>
+</main>
 
-  <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
-  <script>
-    // ---------- CONFIG ----------
-    const MAPBOX_TOKEN = 'YOUR_MAPBOX_ACCESS_TOKEN_HERE';
-    mapboxgl.accessToken = MAPBOX_TOKEN;
-    const map = new mapboxgl.Map({ container:'map', style:'mapbox://styles/mapbox/dark-v11', center:[10.75,59.91], zoom:5 });
+<footer>© 2025 Logichain</footer>
+</div>
 
-    // ... Keep your JS logic for geocode, routing, price calc here ...
-  </script>
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+<script>
+const MAPBOX_TOKEN = 'DIN_MAPBOX_ACCESS_TOKEN_HERE';
+mapboxgl.accessToken = MAPBOX_TOKEN;
+
+// Opprett kart med Norge som midtpunkt
+const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/dark-v11',
+    center: [10.7522, 59.9139], // Oslo, Norge
+    zoom: 5
+});
+
+// Legg til en eksempelmarkør i Oslo
+new mapboxgl.Marker()
+    .setLngLat([10.7522, 59.9139])
+    .setPopup(new mapboxgl.Popup({ offset: 25 }).setText("Oslo, Norge"))
+    .addTo(map);
+
+// Her kan du implementere routing, distance calc og prislogikk videre
+</script>
 </body>
 </html>
