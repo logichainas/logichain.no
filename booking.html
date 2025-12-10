@@ -61,7 +61,7 @@ footer{ text-align:center; margin-top:28px; color:var(--muted); font-size:0.9em;
 <div class="container">
 <header>
     <div class="logo">LOGICHAIN</div>
-    <nav><a href="index.html">Hjem</a></nav>
+    <nav><a href="index.html">Forside</a></nav>
 </header>
 
 <main>
@@ -155,21 +155,230 @@ footer{ text-align:center; margin-top:28px; color:var(--muted); font-size:0.9em;
 const MAPBOX_TOKEN = 'DIN_MAPBOX_ACCESS_TOKEN_HERE';
 mapboxgl.accessToken = MAPBOX_TOKEN;
 
-// Opprett kart med Norge som midtpunkt
-const map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/dark-v11',
-    center: [10.7522, 59.9139], // Oslo, Norge
-    zoom: 5
-});
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logichain – Routing og Prisberegning</title>
 
-// Legg til en eksempelmarkør i Oslo
-new mapboxgl.Marker()
-    .setLngLat([10.7522, 59.9139])
-    .setPopup(new mapboxgl.Popup({ offset: 25 }).setText("Oslo, Norge"))
-    .addTo(map);
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet" />
 
-// Her kan du implementere routing, distance calc og prislogikk videre
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #111;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        #map {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .sidebar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 320px;
+            height: 100vh;
+            background: rgba(0,0,0,0.75);
+            padding: 18px;
+            backdrop-filter: blur(8px);
+            z-index: 5;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+            font-size: 20px;
+            margin-bottom: 14px;
+        }
+
+        .input-row {
+            margin-bottom: 16px;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: none;
+            margin-top: 6px;
+        }
+
+        button {
+            background: #00c2ff;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .stats-box {
+            margin-top: 20px;
+            padding: 12px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>Logichain – Rute & Pris</h2>
+
+    <div class="input-row">
+        Fra:
+        <select id="from">
+            <option value="10.7522,59.9139">Oslo</option>
+            <option value="5.32,60.39">Bergen</option>
+            <option value="10.39,63.43">Trondheim</option>
+            <option value="18.96,69.65">Tromsø</option>
+        </select>
+    </div>
+
+    <div class="input-row">
+        Til:
+        <select id="to">
+            <option value="5.32,60.39">Bergen</option>
+            <option value="10.7522,59.9139">Oslo</option>
+            <option value="10.39,63.43">Trondheim</option>
+            <option value="18.96,69.65">Tromsø</option>
+        </select>
+    </div>
+
+    <div class="input-row">
+        Leverandør:
+        <select id="carrier">
+            <option value="DHL">DHL – 4.20 kr/km</option>
+            <option value="Bring">Bring – 3.30 kr/km</option>
+            <option value="DSV">DSV – 5.10 kr/km</option>
+            <option value="Posten">Posten – 3.80 kr/km</option>
+        </select>
+    </div>
+
+    <button onclick="calculateRoute()">Beregn rute og pris</button>
+
+    <div id="results" class="stats-box">
+        Ingen beregning enda.
+    </div>
+</div>
+
+
+
+<div id="map"></div>
+
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+<script>
+    mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
+
+    // ---------------------------------------
+    // INITIALISER KART
+    // ---------------------------------------
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/dark-v11',
+        center: [10.7522, 59.9139],
+        zoom: 5
+    });
+
+    map.addControl(new mapboxgl.NavigationControl());
+
+    // Standard byer
+    const cities = {
+        "Oslo": [10.7522, 59.9139],
+        "Bergen": [5.32, 60.39],
+        "Trondheim": [10.39, 63.43],
+        "Tromsø": [18.96, 69.65]
+    };
+
+    // Legg markører
+    Object.entries(cities).forEach(([name, coords]) => {
+        new mapboxgl.Marker({ color: '#00e5ff' })
+            .setLngLat(coords)
+            .setPopup(new mapboxgl.Popup().setText(name))
+            .addTo(map);
+    });
+
+
+    // ---------------------------------------
+    // FUNKSJON: Beregn rute
+    // ---------------------------------------
+    async function calculateRoute() {
+        const fromValue = document.getElementById("from").value.split(",");
+        const toValue = document.getElementById("to").value.split(",");
+        const carrier = document.getElementById("carrier").value;
+
+        const from = [parseFloat(fromValue[0]), parseFloat(fromValue[1])];
+        const to = [parseFloat(toValue[0]), parseFloat(toValue[1])];
+
+        const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${from[0]},${from[1]};${to[0]},${to[1]}?geometries=geojson&access_token=${mapboxgl.accessToken}`;
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const route = data.routes[0];
+        const distanceKm = (route.distance / 1000).toFixed(1);
+
+        // Prislogikk per leverandør:
+        const costPerCarrier = {
+            "DHL": 4.2,
+            "Bring": 3.3,
+            "DSV": 5.1,
+            "Posten": 3.8
+        };
+
+        const price = (distanceKm * costPerCarrier[carrier]).toFixed(0);
+
+        // Oppdater tekst
+        document.getElementById("results").innerHTML = `
+            <strong>Distanse:</strong> ${distanceKm} km<br>
+            <strong>Leverandør:</strong> ${carrier}<br>
+            <strong>Pris:</strong> ${price} kr<br><br>
+            Rute tegnet i kartet.
+        `;
+
+        drawRoute(route.geometry);
+    }
+
+
+    // ---------------------------------------
+    // TEGN RUTE I KARTET
+    // ---------------------------------------
+    function drawRoute(geometry) {
+        // Fjern eksisterende lag
+        if (map.getSource("route")) {
+            map.removeLayer("route");
+            map.removeSource("route");
+        }
+
+        map.addSource('route', {
+            'type': 'geojson',
+            'data': {
+                'type': 'Feature',
+                'geometry': geometry
+            }
+        });
+
+        map.addLayer({
+            'id': 'route',
+            'type': 'line',
+            'source': 'route',
+            'layout': {
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            'paint': {
+                'line-color': '#00e5ff',
+                'line-width': 4
+            }
+        });
+    }
+
 </script>
+
 </body>
 </html>
