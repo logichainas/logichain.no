@@ -5,151 +5,71 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Booking – Logichain</title>
 
-<!-- FAVICON -->
 <link rel="icon" type="image/png" href="assets/favicon.png">
-
-<!-- MAPBOX -->
-<link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet" />
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
 
 <style>
-/* ---------- THEME ---------- */
-:root {
-    --bg:#121212;
-    --card:#1e1e1e;
-    --primary:#0a66c2;
-    --text:#f5f5f5;
-    --muted:#aaa;
-    --shadow:rgba(0,0,0,0.6);
+:root{
+  --bg:#0e1117;
+  --card:#161b22;
+  --accent:#4da3ff;
+  --text:#e6e6e6;
+  --muted:#9aa4b2;
+  --border:#30363d;
 }
-
 body{
-    margin:0;
-    font-family:Inter, Arial, sans-serif;
-    background:var(--bg);
-    color:var(--text);
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
-
-a{color:var(--primary);text-decoration:none}
 .container{max-width:1200px;margin:28px auto;padding:20px}
-
-/* ---------- HEADER ---------- */
 header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-bottom:1px solid #333;
-    padding-bottom:12px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid var(--border);padding-bottom:14px;
 }
-.logo{
-    font-weight:700;
-    letter-spacing:2px;
-    font-size:1.6em;
-    color:var(--primary);
-}
-nav a{margin-left:18px;font-weight:500}
-
-/* ---------- LAYOUT ---------- */
+.logo{font-size:1.6em;font-weight:700;letter-spacing:2px;color:var(--accent)}
+nav a{margin-left:18px;color:var(--text)}
 .grid{
-    display:grid;
-    grid-template-columns:1fr 420px;
-    gap:24px;
-    margin-top:20px;
+  display:grid;grid-template-columns:1fr 420px;gap:24px;margin-top:24px;
 }
-@media(max-width:900px){
-    .grid{grid-template-columns:1fr}
-}
-
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
 .card{
-    background:var(--card);
-    padding:24px;
-    border-radius:12px;
-    box-shadow:0 6px 20px var(--shadow);
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:24px;
 }
-
-.map{
-    height:320px;
-    border-radius:8px;
-    border:1px solid #333;
-}
-
-/* ---------- FORM ---------- */
+.map{height:320px;border-radius:10px;border:1px solid var(--border)}
 label{font-size:13px;font-weight:600;display:block;margin-bottom:6px}
 input,select,textarea{
-    width:100%;
-    padding:12px;
-    border-radius:8px;
-    border:1px solid #333;
-    background:#1a1a1a;
-    color:#fff;
-    margin-bottom:12px;
+  width:100%;padding:12px;border-radius:8px;
+  border:1px solid var(--border);
+  background:#0b0f14;color:var(--text);margin-bottom:12px;
 }
-.two-col{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 button{
-    padding:12px 20px;
-    border-radius:8px;
-    border:none;
-    background:var(--primary);
-    color:#fff;
-    font-weight:600;
-    cursor:pointer;
+  padding:12px 20px;border:none;border-radius:8px;
+  background:var(--accent);color:#000;font-weight:700;cursor:pointer;
 }
-button.secondary{
-    background:#2a2a2a;
-    color:var(--primary);
-}
-
-/* ---------- NON STACKABLE ---------- */
-.nonstack-row{
-    position:relative;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    margin-bottom:14px;
-}
-.info-btn{
-    width:22px;
-    height:22px;
-    border-radius:999px;
-    border:none;
-    background:var(--primary);
-    color:#fff;
-    font-size:13px;
-    font-weight:700;
-    cursor:pointer;
-}
-.info-box{
-    display:none;
-    position:absolute;
-    top:32px;
-    left:0;
-    background:#222;
-    padding:12px;
-    border-radius:8px;
-    font-size:13px;
-    width:260px;
-    box-shadow:0 6px 20px rgba(0,0,0,0.7);
-    z-index:10;
-}
-
-/* ---------- SUMMARY ---------- */
-.price{
-    font-size:22px;
-    font-weight:700;
-    color:var(--primary);
-    margin-top:10px;
-}
+button.secondary{background:#222;color:var(--accent)}
+.price{font-size:24px;font-weight:700;color:var(--accent);margin-top:8px}
 .muted{color:var(--muted);font-size:13px}
 
-footer{
-    text-align:center;
-    margin-top:32px;
-    color:var(--muted);
-    font-size:0.9em;
+.nonstack{
+  display:flex;align-items:center;gap:8px;margin-bottom:14px;position:relative;
 }
+.info-btn{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--accent);border:none;font-weight:700;cursor:pointer;
+}
+.info-box{
+  display:none;position:absolute;top:28px;left:0;
+  background:#0b0f14;border:1px solid var(--border);
+  padding:12px;border-radius:8px;width:260px;font-size:13px;
+  z-index:5;
+}
+footer{text-align:center;margin-top:40px;color:var(--muted);font-size:0.9em}
 </style>
 </head>
 
@@ -157,119 +77,144 @@ footer{
 <div class="container">
 
 <header>
-    <div class="logo">LOGICHAIN</div>
-    <nav><a href="index.html">Forside</a></nav>
+  <div class="logo">LOGICHAIN</div>
+  <nav><a href="index.html">Forside</a></nav>
 </header>
 
 <main class="grid">
 
-<!-- LEFT -->
+<!-- VENSTRE -->
 <div>
-    <div class="card" style="margin-bottom:20px">
-        <h3>Rute</h3>
-        <div id="map" class="map"></div>
-    </div>
+  <div class="card" style="margin-bottom:20px">
+    <h3>Rute</h3>
+    <div id="map" class="map"></div>
+  </div>
 
-    <div class="card">
-        <h3>Oppsummering</h3>
-        <div>Distanse: <span id="distanceText">—</span></div>
-        <div>Estimert levering: <span id="etaText">—</span></div>
-        <div class="price" id="priceText">—</div>
-        <div class="muted" id="priceNote">—</div>
-    </div>
+  <div class="card">
+    <h3>Oppsummering</h3>
+    <div>Distanse: <span id="distanceText">—</span></div>
+    <div>ETA: <span id="etaText">—</span></div>
+    <div class="price" id="priceText">—</div>
+    <div class="muted" id="priceNote">—</div>
+  </div>
 </div>
 
-<!-- RIGHT -->
-<form class="card">
-    <h3>Forsendelse</h3>
+<!-- HØYRE -->
+<form class="card" onsubmit="event.preventDefault();submitBooking();">
+  <h3>Forsendelse</h3>
 
-    <div class="two-col">
-        <div>
-            <label>Avsender land</label>
-            <input value="Norway">
-        </div>
-        <div>
-            <label>Mottaker land</label>
-            <input value="Norway">
-        </div>
+  <label>Avsender adresse</label>
+  <input id="from" placeholder="Gate, postnr, sted">
+
+  <label>Mottaker adresse</label>
+  <input id="to" placeholder="Gate, postnr, sted">
+
+  <div class="two-col">
+    <div>
+      <label>Vekt (kg)</label>
+      <input id="weight" type="number" value="10">
     </div>
-
-    <label>Avsender adresse</label>
-    <input placeholder="Gate, postnr, sted">
-
-    <label>Mottaker adresse</label>
-    <input placeholder="Gate, postnr, sted">
-
-    <div class="two-col">
-        <div>
-            <label>Vekt (kg)</label>
-            <input type="number" value="10">
-        </div>
-        <div>
-            <label>Størrelse (L×B×H cm)</label>
-            <input placeholder="120x80x60">
-        </div>
+    <div>
+      <label>Volum (m³)</label>
+      <input id="volume" type="number" step="0.01" value="0.5">
     </div>
+  </div>
 
-    <div class="nonstack-row">
-        <input type="checkbox" id="nonStack">
-        <span>Non-stackable</span>
-        <button type="button" class="info-btn" onclick="toggleInfo()">i</button>
-        <div id="infoBox" class="info-box">
-            Non-stackable betyr at godset ikke kan stables med annet gods.
-            Dette kan gi pristillegg.
-        </div>
+  <div class="nonstack">
+    <input type="checkbox" id="nonstack">
+    <span>Non-stackable</span>
+    <button type="button" class="info-btn" onclick="toggleInfo()">i</button>
+    <div id="infoBox" class="info-box">
+      Godset kan ikke stables med annet gods og krever ekstra plass.
     </div>
+  </div>
 
-    <label>Service</label>
-    <select>
-        <option>Standard</option>
-        <option>Economy</option>
-        <option>Express</option>
-    </select>
+  <label>Service</label>
+  <select id="service">
+    <option value="economy">Economy</option>
+    <option value="standard" selected>Standard</option>
+    <option value="express">Express</option>
+  </select>
 
-    <button type="button" onclick="calculate()">Beregn</button>
-    <button type="submit" class="secondary">Send forespørsel</button>
+  <label>Leverandør</label>
+  <select id="carrier">
+    <option value="bring">Bring</option>
+    <option value="posten">Posten</option>
+    <option value="dhl">DHL</option>
+    <option value="dsv">DSV</option>
+  </select>
+
+  <button type="button" onclick="calculate()">Beregn rute & pris</button>
+  <button type="submit" class="secondary">Send booking</button>
 </form>
 
 </main>
 
 <footer>© 2025 Logichain AS</footer>
-
 </div>
 
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
 <script>
-mapboxgl.accessToken = 'DIN_MAPBOX_TOKEN';
+mapboxgl.accessToken = 'DIN_MAPBOX_TOKEN_HER';
 
 const map = new mapboxgl.Map({
-    container:'map',
-    style:'mapbox://styles/mapbox/dark-v11',
-    center:[10.7522,59.9139],
-    zoom:5
+  container:'map',
+  style:'mapbox://styles/mapbox/dark-v11',
+  center:[10.7522,59.9139],
+  zoom:5
 });
 
 function toggleInfo(){
-    const box=document.getElementById('infoBox');
-    box.style.display = box.style.display==='block'?'none':'block';
+  const b=document.getElementById('infoBox');
+  b.style.display=b.style.display==='block'?'none':'block';
 }
 
-function calculate(){
-    const distance = 420; // demo
-    let price = distance * 3.8;
+async function geocode(addr){
+  const url=`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(addr)}.json?country=no&access_token=${mapboxgl.accessToken}`;
+  const res=await fetch(url);
+  const data=await res.json();
+  return data.features[0].center;
+}
 
-    if(document.getElementById('nonStack').checked){
-        price *= 1.15;
-        document.getElementById('priceNote').innerText='Inkl. non-stackable tillegg';
-    } else {
-        document.getElementById('priceNote').innerText='';
-    }
+async function calculate(){
+  const from=await geocode(document.getElementById('from').value);
+  const to=await geocode(document.getElementById('to').value);
 
-    document.getElementById('distanceText').innerText = distance+' km';
-    document.getElementById('etaText').innerText = '2 dager';
-    document.getElementById('priceText').innerText = Math.round(price)+' kr';
+  const routeUrl=`https://api.mapbox.com/directions/v5/mapbox/driving/${from[0]},${from[1]};${to[0]},${to[1]}?geometries=geojson&access_token=${mapboxgl.accessToken}`;
+  const res=await fetch(routeUrl);
+  const data=await res.json();
+  const route=data.routes[0];
+
+  const km=route.distance/1000;
+  document.getElementById('distanceText').innerText=km.toFixed(1)+' km';
+
+  const service=document.getElementById('service').value;
+  const eta=Math.round(km/(service==='express'?80:60));
+  document.getElementById('etaText').innerText=eta+' timer';
+
+  let price=km*3.8;
+  price+=document.getElementById('weight').value*1.2;
+  price+=document.getElementById('volume').value*400;
+  if(document.getElementById('nonstack').checked) price*=1.15;
+  if(service==='express') price*=1.25;
+  if(service==='economy') price*=0.9;
+
+  document.getElementById('priceText').innerText=Math.round(price)+' kr';
+  document.getElementById('priceNote').innerText='Estimert pris eks. mva';
+
+  if(map.getSource('route')){
+    map.removeLayer('route');map.removeSource('route');
+  }
+  map.addSource('route',{type:'geojson',data:{type:'Feature',geometry:route.geometry}});
+  map.addLayer({
+    id:'route',type:'line',source:'route',
+    paint:{'line-color':'#4da3ff','line-width':4}
+  });
+}
+
+function submitBooking(){
+  alert('Booking sendt (frontend-demo). Klar for backend.');
 }
 </script>
-
 </body>
 </html>
