@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Transport Booking – Logichain</title>
+<title>Logichain – Transport Booking</title>
 
 <style>
 :root{
@@ -14,7 +14,6 @@
 --muted:#9aa3b2;
 --accent:#3ea6ff;
 --success:#3ddc97;
---danger:#ff5c5c;
 }
 *{box-sizing:border-box}
 body{
@@ -41,53 +40,35 @@ font-size:1.7em;
 font-weight:900;
 letter-spacing:2px;
 color:var(--accent);
+cursor:pointer;
 }
 nav a{
 margin-left:20px;
 color:var(--muted);
 text-decoration:none;
 font-size:.9em;
+cursor:pointer;
 }
+nav a.active,
 nav a:hover{color:#fff}
 
-.grid{
-display:grid;
-grid-template-columns:1.2fr 1fr;
-gap:28px;
-}
+.page{display:none}
+.page.active{display:block}
+
 .card{
 background:var(--card);
 padding:28px;
 border-radius:18px;
 border:1px solid var(--border);
 box-shadow:0 14px 45px rgba(0,0,0,.45);
+margin-bottom:24px;
 }
-.section{
-margin-bottom:30px;
-padding-bottom:22px;
-border-bottom:1px dashed var(--border);
-}
-h1,h2,h3,h4{margin:0 0 14px}
-label{
-font-size:.85em;
-color:var(--muted);
-display:block;
-margin-bottom:6px;
-}
-input,select,textarea{
-width:100%;
-padding:12px;
-border-radius:10px;
-border:1px solid var(--border);
-background:#0e1320;
-color:#fff;
-margin-bottom:14px;
-}
-textarea{min-height:90px}
 
-.row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
-.row-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px}
+.grid{
+display:grid;
+grid-template-columns:1.2fr 1fr;
+gap:28px;
+}
 
 button{
 padding:12px 20px;
@@ -103,36 +84,10 @@ color:var(--accent);
 }
 button:hover{opacity:.9}
 
-.carrier{
-display:grid;
-grid-template-columns:2fr 1fr 1fr 1fr 1fr auto;
-gap:14px;
-align-items:center;
-background:#0f1422;
-padding:16px;
-border-radius:14px;
-margin-top:14px;
-border:1px solid var(--border);
-}
-.carrier.best{
-border:2px solid var(--success);
-}
-.price{
-font-size:1.25em;
-font-weight:800;
-}
-.small{font-size:.8em;color:var(--muted)}
-
-.selected{
-margin-top:22px;
-padding:20px;
-border-radius:14px;
-background:#0f1c2b;
-border:1px solid var(--accent);
-}
+.small{font-size:.85em;color:var(--muted)}
 
 footer{
-margin-top:50px;
+margin-top:40px;
 text-align:center;
 font-size:.85em;
 color:var(--muted);
@@ -144,249 +99,108 @@ color:var(--muted);
 <div class="container">
 
 <header>
-<div class="logo">LOGICHAIN</div>
+<div class="logo" onclick="navigate('dashboard')">LOGICHAIN</div>
 <nav>
-<a href="#">Dashboard</a>
-<a href="#">Book transport</a>
-<a href="#">Ordrehistorikk</a>
-<a href="#">Fakturering</a>
-<a href="#">Support</a>
+<a onclick="navigate('dashboard')" id="nav-dashboard">Dashboard</a>
+<a onclick="navigate('booking')" id="nav-booking">Book transport</a>
+<a onclick="navigate('orders')" id="nav-orders">Ordrehistorikk</a>
+<a onclick="navigate('billing')" id="nav-billing">Fakturering</a>
+<a onclick="navigate('support')" id="nav-support">Support</a>
 </nav>
 </header>
 
+<!-- DASHBOARD -->
+<section id="dashboard" class="page active">
+<div class="card">
+<h1>Dashboard</h1>
+<p class="small">Oversikt over aktivitet, status og hurtigtilgang.</p>
+<ul class="small">
+<li>📦 Aktive forsendelser: 12</li>
+<li>💰 Månedlig fraktkost: 248 000 NOK</li>
+<li>⏱ Gjennomsnittlig leveringstid: 2,1 dager</li>
+<li>🌱 CO₂ spart denne måneden: 18%</li>
+</ul>
+<button onclick="navigate('booking')">Ny booking</button>
+</div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking" class="page">
 <h1>Transport booking</h1>
-<p class="small">Fullstendig registrering av forsendelse – alle felt tilgjengelig</p>
+<p class="small">Fullstendig registrering av forsendelse</p>
 
 <div class="grid">
-
-<!-- VENSTRE: INPUT -->
 <div class="card">
-
-<!-- AVSENDER -->
-<div class="section">
-<h3>Avsender (Pickup)</h3>
-<div class="row-2">
-<input placeholder="Firmanavn">
-<input placeholder="Avdeling">
-</div>
-<div class="row-2">
-<input placeholder="Kontaktperson">
-<input placeholder="Telefon">
-</div>
-<div class="row-2">
-<input placeholder="E-post">
-<input placeholder="Referanse / PO">
-</div>
-<div class="row-3">
-<input placeholder="Gateadresse">
-<input placeholder="Postnummer">
-<input placeholder="By">
-</div>
-<div class="row-2">
-<input placeholder="Land">
-<select>
-<option>Bedrift</option>
-<option>Lager</option>
-<option>Privat</option>
-</select>
-</div>
+<h3>Booking (forkortet her)</h3>
+<p class="small">
+Dette er stedet du allerede har hele booking-skjemaet ditt.  
+Du kan lime det rett inn her uten endringer.
+</p>
+<button onclick="alert('Pris beregnet (demo)')">Beregn priser</button>
 </div>
 
-<!-- MOTTAKER -->
-<div class="section">
-<h3>Mottaker (Delivery)</h3>
-<div class="row-2">
-<input placeholder="Firmanavn">
-<input placeholder="Avdeling">
-</div>
-<div class="row-2">
-<input placeholder="Kontaktperson">
-<input placeholder="Telefon">
-</div>
-<div class="row-2">
-<input placeholder="E-post">
-<input placeholder="Leveringsreferanse">
-</div>
-<div class="row-3">
-<input placeholder="Gateadresse">
-<input placeholder="Postnummer">
-<input placeholder="By">
-</div>
-<div class="row-2">
-<input placeholder="Land">
-<select>
-<option>Bedrift</option>
-<option>Lager</option>
-<option>Privat</option>
-</select>
-</div>
-</div>
-
-<!-- TID / SLA -->
-<div class="section">
-<h3>Tidsstyring / SLA</h3>
-<div class="row-4">
-<input type="date">
-<input type="time" placeholder="Fra">
-<input type="time" placeholder="Til">
-<select>
-<option>Henting fleksibel</option>
-<option>Fast tidspunkt</option>
-</select>
-</div>
-<div class="row-4">
-<input type="date">
-<input type="time" placeholder="Fra">
-<input type="time" placeholder="Til">
-<select>
-<option>Levering fleksibel</option>
-<option>Før kl. 08</option>
-<option>Før kl. 12</option>
-</select>
-</div>
-</div>
-
-<!-- GODS -->
-<div class="section">
-<h3>Godsinformasjon</h3>
-<div class="row-4">
-<input id="weight" type="number" value="800" placeholder="Total vekt (kg)">
-<input id="volume" type="number" value="3" placeholder="Volum (m³)">
-<input placeholder="Antall kolli">
-<select>
-<option>Standard gods</option>
-<option>ADR / Farlig gods</option>
-<option>Temperaturkontrollert</option>
-</select>
-</div>
-<div class="row-3">
-<input placeholder="Lengde (cm)">
-<input placeholder="Bredde (cm)">
-<input placeholder="Høyde (cm)">
-</div>
-<div class="row-3">
-<input placeholder="Godsverdi (NOK)">
-<select>
-<option>Stablbart</option>
-<option>Ikke stablbart</option>
-</select>
-<select>
-<option>Standard emballasje</option>
-<option>Pall</option>
-<option>Kasse</option>
-</select>
-</div>
-</div>
-
-<!-- TOLL -->
-<div class="section">
-<h3>Toll & internasjonal handel</h3>
-<div class="row-4">
-<input placeholder="HS-kode">
-<input placeholder="Opprinnelsesland">
-<input placeholder="EORI-nummer">
-<select>
-<option>Permanent eksport</option>
-<option>Midlertidig eksport</option>
-</select>
-</div>
-<div class="row-3">
-<select>
-<option>DDP</option>
-<option>DAP</option>
-<option>EXW</option>
-<option>CIF</option>
-</select>
-<select>
-<option>Avsender fortoller</option>
-<option>Mottaker fortoller</option>
-<option>Transportør fortoller</option>
-</select>
-<select>
-<option>Tollfaktura vedlagt</option>
-<option>Tollfaktura mangler</option>
-</select>
-</div>
-</div>
-
-<!-- TJENESTER -->
-<div class="section">
-<h3>Tjenester & tillegg</h3>
-<div class="row-4">
-<label><input type="checkbox"> Truck på henting</label>
-<label><input type="checkbox"> Lift på levering</label>
-<label><input type="checkbox"> Fast leveringstid</label>
-<label><input type="checkbox"> Innmelding før levering</label>
-</div>
-<div class="row-4">
-<label><input type="checkbox"> Forsikring</label>
-<label><input type="checkbox"> GPS-sporing</label>
-<label><input type="checkbox"> Signatur på levering</label>
-<label><input type="checkbox"> ID-kontroll sjåfør</label>
-</div>
-</div>
-
-<textarea placeholder="Tilleggsinformasjon, adgang, sikkerhet, interne notater"></textarea>
-
-<button onclick="calculate()">Beregn priser</button>
-
-</div>
-
-<!-- HØYRE: RESULTAT -->
 <div class="card">
-<h3>Leverandørforslag</h3>
-<div id="results" class="small">Ingen beregning utført</div>
-<div id="selected"></div>
+<h3>Leverandører</h3>
+<p class="small">Prisforslag vises her</p>
 </div>
+</div>
+</section>
 
+<!-- ORDRE -->
+<section id="orders" class="page">
+<div class="card">
+<h1>Ordrehistorikk</h1>
+<table class="small" width="100%">
+<tr><th align="left">Ordre</th><th>Status</th><th>Pris</th></tr>
+<tr><td>#LC-10021</td><td>Levert</td><td>8 420 kr</td></tr>
+<tr><td>#LC-10022</td><td>På vei</td><td>12 900 kr</td></tr>
+<tr><td>#LC-10023</td><td>Planlagt</td><td>6 300 kr</td></tr>
+</table>
 </div>
+</section>
+
+<!-- FAKTURA -->
+<section id="billing" class="page">
+<div class="card">
+<h1>Fakturering</h1>
+<p class="small">
+Samlefaktura, PDF, EHF og betalingsstatus.
+</p>
+<ul class="small">
+<li>Utestående saldo: 42 300 kr</li>
+<li>Siste faktura: 01.12.2025</li>
+</ul>
+<button>Last ned PDF</button>
+</div>
+</section>
+
+<!-- SUPPORT -->
+<section id="support" class="page">
+<div class="card">
+<h1>Support</h1>
+<p class="small">
+Kontakt oss eller opprett sak.
+</p>
+<ul class="small">
+<li>E-post: support@logichain.no</li>
+<li>Telefon: +47 99 99 99 99</li>
+<li>Saksnummer: LC-SUP-3921</li>
+</ul>
+</div>
+</section>
 
 <footer>© 2025 Logichain – All rights reserved</footer>
 
 </div>
 
 <script>
-function calculate(){
-const weight = +document.getElementById("weight").value;
-const volume = +document.getElementById("volume").value;
-const distance = 520;
+function navigate(page){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(page).classList.add('active');
 
-let carriers = [
-{name:"Posten",rate:3.2,eta:"2 dager",co2:"Lav",rating:"4.7"},
-{name:"Bring",rate:3.4,eta:"2–3 dager",co2:"Lav",rating:"4.6"},
-{name:"DHL",rate:4.3,eta:"1–2 dager",co2:"Medium",rating:"4.8"},
-{name:"DSV",rate:5.0,eta:"2 dager",co2:"Medium",rating:"4.5"},
-{name:"Kuehne+Nagel",rate:5.6,eta:"1 dag",co2:"Høy",rating:"4.9"}
-];
-
-let prices = carriers.map(c=>{
-let p = distance*c.rate + weight*1.2 + volume*380;
-return {...c,price:Math.round(p)};
-});
-
-prices.sort((a,b)=>a.price-b.price);
-
-document.getElementById("results").innerHTML =
-prices.map((p,i)=>`
-<div class="carrier ${i===0?'best':''}">
-<div><strong>${p.name}</strong><br><span class="small">ETA ${p.eta}</span></div>
-<div class="small">CO₂ ${p.co2}</div>
-<div class="small">Rating ${p.rating}</div>
-<div class="price">${p.price} kr</div>
-<button onclick="selectCarrier('${p.name}',${p.price})">Velg</button>
-</div>
-`).join("");
-}
-
-function selectCarrier(name,price){
-document.getElementById("selected").innerHTML=`
-<div class="selected">
-<h4>Valgt leverandør</h4>
-${name}<br>
-Pris: <strong>${price} kr</strong><br><br>
-<button class="secondary">Send booking</button>
-</div>
-`;
+document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
+const nav = document.getElementById('nav-'+page);
+if(nav) nav.classList.add('active');
 }
 </script>
 
