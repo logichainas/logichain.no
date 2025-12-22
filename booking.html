@@ -14,6 +14,7 @@
 --muted:#9aa3b2;
 --accent:#3ea6ff;
 --success:#3ddc97;
+--warning:#ffb347;
 }
 *{box-sizing:border-box}
 body{
@@ -66,9 +67,28 @@ margin-bottom:24px;
 
 .grid{
 display:grid;
-grid-template-columns:1.2fr 1fr;
+grid-template-columns:1.3fr 1fr;
 gap:28px;
 }
+
+h1,h2,h3{margin-top:0}
+
+label{
+display:block;
+font-size:.85em;
+margin-top:14px;
+margin-bottom:4px;
+color:var(--muted);
+}
+input,select,textarea{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:1px solid var(--border);
+background:#0f1420;
+color:#fff;
+}
+textarea{resize:vertical;min-height:80px}
 
 button{
 padding:12px 20px;
@@ -82,9 +102,27 @@ button.secondary{
 background:#22283a;
 color:var(--accent);
 }
+button.success{
+background:var(--success);
+color:#062a1c;
+}
 button:hover{opacity:.9}
 
 .small{font-size:.85em;color:var(--muted)}
+
+.vendor{
+border:1px solid var(--border);
+border-radius:14px;
+padding:18px;
+margin-bottom:16px;
+}
+.vendor.best{border-color:var(--success)}
+.vendor-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:8px;
+}
 
 footer{
 margin-top:40px;
@@ -113,12 +151,12 @@ color:var(--muted);
 <section id="dashboard" class="page active">
 <div class="card">
 <h1>Dashboard</h1>
-<p class="small">Oversikt over aktivitet, status og hurtigtilgang.</p>
+<p class="small">Rask oversikt over logistikk og kostnader.</p>
 <ul class="small">
 <li>📦 Aktive forsendelser: 12</li>
 <li>💰 Månedlig fraktkost: 248 000 NOK</li>
-<li>⏱ Gjennomsnittlig leveringstid: 2,1 dager</li>
-<li>🌱 CO₂ spart denne måneden: 18%</li>
+<li>⏱ Snitt leveringstid: 2,1 dager</li>
+<li>🌱 CO₂-besparelse: 18 %</li>
 </ul>
 <button onclick="navigate('booking')">Ny booking</button>
 </div>
@@ -127,21 +165,116 @@ color:var(--muted);
 <!-- BOOKING -->
 <section id="booking" class="page">
 <h1>Transport booking</h1>
-<p class="small">Fullstendig registrering av forsendelse</p>
+<p class="small">Fyll inn detaljer – jo mer nøyaktig, desto bedre pris.</p>
 
 <div class="grid">
+
+<!-- BOOKING SKJEMA -->
 <div class="card">
-<h3>Booking (forkortet her)</h3>
-<p class="small">
-Dette er stedet du allerede har hele booking-skjemaet ditt.  
-Du kan lime det rett inn her uten endringer.
-</p>
-<button onclick="alert('Pris beregnet (demo)')">Beregn priser</button>
+<h2>1. Forsendelsesdetaljer</h2>
+
+<label>Type last</label>
+<select>
+<option>Stykkgods</option>
+<option>Pall</option>
+<option>Parti</option>
+<option>Full bil</option>
+<option>Farlig gods (ADR)</option>
+</select>
+
+<label>Antall kolli</label>
+<input type="number" placeholder="Eks: 4">
+
+<label>Total vekt (kg)</label>
+<input type="number" placeholder="Eks: 820">
+
+<label>Volum (m³)</label>
+<input type="number" placeholder="Eks: 3.4">
+
+<label>Mål per kolli (L × B × H cm)</label>
+<input placeholder="Eks: 120 x 80 x 150">
+
+<label>Beskrivelse av last</label>
+<textarea placeholder="Hva transporteres? (valgfritt men anbefalt)"></textarea>
+
+<hr style="border-color:var(--border);margin:20px 0">
+
+<h2>2. Ruteinformasjon</h2>
+
+<label>Henteadresse</label>
+<input placeholder="Gate, postnummer, sted, land">
+
+<label>Leveringsadresse</label>
+<input placeholder="Gate, postnummer, sted, land">
+
+<label>Ønsket hentetidspunkt</label>
+<input type="date">
+
+<label>Leveringskrav</label>
+<select>
+<option>Standard</option>
+<option>Ekspress</option>
+<option>Tidsbestemt levering</option>
+</select>
+
+<hr style="border-color:var(--border);margin:20px 0">
+
+<h2>3. Tillegg og krav</h2>
+
+<label>
+<input type="checkbox"> Temperaturkontroll
+</label>
+<label>
+<input type="checkbox"> Løftelem
+</label>
+<label>
+<input type="checkbox"> Forsikring
+</label>
+
+<label>Kommentar til sjåfør / leverandør</label>
+<textarea placeholder="Adkomst, åpningstider, kontaktinfo, osv."></textarea>
+
+<button style="margin-top:20px" onclick="calculate()">Beregn priser</button>
 </div>
 
+<!-- LEVERANDØRER -->
 <div class="card">
-<h3>Leverandører</h3>
-<p class="small">Prisforslag vises her</p>
+<h2>Prisforslag</h2>
+<p class="small">Sortert fra lavest totalpris</p>
+
+<div class="vendor best">
+<div class="vendor-header">
+<strong>Bring Cargo</strong>
+<strong>7 950 kr</strong>
+</div>
+<p class="small">
+⏱ 2 dager • 🌱 CO₂: Lav • ⭐ Anbefalt
+</p>
+<button class="success">Velg leverandør</button>
+</div>
+
+<div class="vendor">
+<div class="vendor-header">
+<strong>DB Schenker</strong>
+<strong>8 420 kr</strong>
+</div>
+<p class="small">
+⏱ 2–3 dager • 🌱 CO₂: Middels
+</p>
+<button class="secondary">Velg leverandør</button>
+</div>
+
+<div class="vendor">
+<div class="vendor-header">
+<strong>DHL Freight</strong>
+<strong>9 180 kr</strong>
+</div>
+<p class="small">
+⏱ 1–2 dager • 🌱 CO₂: Høy
+</p>
+<button class="secondary">Velg leverandør</button>
+</div>
+
 </div>
 </div>
 </section>
@@ -150,11 +283,11 @@ Du kan lime det rett inn her uten endringer.
 <section id="orders" class="page">
 <div class="card">
 <h1>Ordrehistorikk</h1>
-<table class="small" width="100%">
-<tr><th align="left">Ordre</th><th>Status</th><th>Pris</th></tr>
-<tr><td>#LC-10021</td><td>Levert</td><td>8 420 kr</td></tr>
-<tr><td>#LC-10022</td><td>På vei</td><td>12 900 kr</td></tr>
-<tr><td>#LC-10023</td><td>Planlagt</td><td>6 300 kr</td></tr>
+<table width="100%" class="small">
+<tr><th align="left">Ordre</th><th>Status</th><th>Leverandør</th><th>Pris</th></tr>
+<tr><td>#LC-10021</td><td>Levert</td><td>Bring</td><td>8 420 kr</td></tr>
+<tr><td>#LC-10022</td><td>På vei</td><td>Schenker</td><td>12 900 kr</td></tr>
+<tr><td>#LC-10023</td><td>Planlagt</td><td>DHL</td><td>6 300 kr</td></tr>
 </table>
 </div>
 </section>
@@ -163,12 +296,10 @@ Du kan lime det rett inn her uten endringer.
 <section id="billing" class="page">
 <div class="card">
 <h1>Fakturering</h1>
-<p class="small">
-Samlefaktura, PDF, EHF og betalingsstatus.
-</p>
 <ul class="small">
 <li>Utestående saldo: 42 300 kr</li>
 <li>Siste faktura: 01.12.2025</li>
+<li>Betalingsmetode: EHF / PDF</li>
 </ul>
 <button>Last ned PDF</button>
 </div>
@@ -178,9 +309,6 @@ Samlefaktura, PDF, EHF og betalingsstatus.
 <section id="support" class="page">
 <div class="card">
 <h1>Support</h1>
-<p class="small">
-Kontakt oss eller opprett sak.
-</p>
 <ul class="small">
 <li>E-post: support@logichain.no</li>
 <li>Telefon: +47 99 99 99 99</li>
@@ -201,6 +329,10 @@ document.getElementById(page).classList.add('active');
 document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
 const nav = document.getElementById('nav-'+page);
 if(nav) nav.classList.add('active');
+}
+
+function calculate(){
+alert("Prisene er beregnet basert på innsendte detaljer (demo).");
 }
 </script>
 
